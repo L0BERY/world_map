@@ -1,6 +1,7 @@
 #ifndef MAPWIDGET_H
 #define MAPWIDGET_H
 
+#include <cmath>
 #include <QWidget>
 #include <QVector>
 #include <QDebug>
@@ -12,8 +13,8 @@ class mapWidget : public QWidget
 public:
     explicit mapWidget(QWidget *parent = nullptr);
     QString file_path, cur_file;
-    std::tuple<int, double> lon2tileX(double, int);
-    std::tuple<int, double> lat2tileY(double, int);
+    std::tuple<int, double> lon2tileX(double);
+    std::tuple<int, double> lat2tileY(double);
     void drawMap(double, double, double);
 
 private:
@@ -22,9 +23,11 @@ private:
         QPoint pos;
     };
     QVector<Tile> vec_tile;
-    int getZoom(double);
+    int getZoom();
+    int zoom;
     void drawCircle(QPainter &);
-    double radius;
+    double lonX, latY, radius;
+    std::tuple<int, double> tileX, tileY;
 
 protected:
     void paintEvent(QPaintEvent *);
